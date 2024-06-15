@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "4"
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"application","namespace":"default"},"spec":{"replicas":2,"selector":{"matchLabels":{"app":"application"}},"template":{"metadata":{"labels":{"app":"application"}},"spec":{"containers":[{"env":[{"name":"SPRING_DATASOURCE_URL","value":"jdbc:mysql://mysql:3306/ghayth?createDatabaseIfNotExist=true\u0026useUnicode=true\u0026useJDBCCompliantTimezoneShift=true\u0026useLegacyDatetimeCode=false\u0026serverTimezone=UTC"},{"name":"SPRING_DATASOURCE_USERNAME","value":"root"},{"name":"SPRING_DATASOURCE_PASSWORD","value":""}],"image":"ghaythsel404/back:v3","name":"application","ports":[{"containerPort":8080}]}]}}}}
+  creationTimestamp: "2024-05-12T15:37:15Z"
+  generation: 5
+  name: application
+  namespace: default
+  resourceVersion: "262175"
+  uid: af0d5ed3-3451-4a3c-9bed-a5c2ef0e9b1d
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: application
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: application
+    spec:
+      containers:
+      - env:
+        - name: SPRING_DATASOURCE_URL
+          value: jdbc:mysql://mysql:3306/ghayth?createDatabaseIfNotExist=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+        - name: SPRING_DATASOURCE_USERNAME
+          value: root
+        - name: SPRING_DATASOURCE_PASSWORD
+        image: rbaihis/deploy:spring_v3
+        imagePullPolicy: IfNotPresent
+        name: application
+        ports:
+        - containerPort: 30100
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2024-05-12T15:37:15Z"
+    lastUpdateTime: "2024-06-12T00:11:13Z"
+    message: ReplicaSet "application-869c78b6cb" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  - lastTransitionTime: "2024-06-12T03:58:35Z"
+    lastUpdateTime: "2024-06-12T03:58:35Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  observedGeneration: 5
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1

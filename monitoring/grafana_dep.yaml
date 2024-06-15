@@ -1,0 +1,83 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"grafana"},"name":"grafana","namespace":"default"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"grafana"}},"template":{"metadata":{"labels":{"app":"grafana"}},"spec":{"containers":[{"env":[{"name":"GF_SECURITY_ADMIN_USER","value":"saifoun"},{"name":"GF_SECURITY_ADMIN_PASSWORD","value":"saifoun123"},{"name":"GF_INSTALL_PLUGINS","value":"grafana-piechart-panel,camptocamp-prometheus-alertmanager-datasource,grafana-clock-panel"}],"image":"grafana/grafana:10.0.4","imagePullPolicy":"IfNotPresent","name":"grafana","ports":[{"containerPort":3000,"name":"grafana"}],"resources":{},"volumeMounts":[{"mountPath":"/etc/grafana/provisioning/datasources","name":"datasource"}]}],"restartPolicy":"Always","volumes":[{"configMap":{"name":"grafana-datasource"},"name":"datasource"}]}}}}
+  creationTimestamp: "2024-03-06T08:20:03Z"
+  generation: 1
+  labels:
+    app: grafana
+  name: grafana
+  namespace: default
+  resourceVersion: "262068"
+  uid: 84efdf27-f781-465f-905c-f05effab60e0
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: grafana
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: grafana
+    spec:
+      containers:
+      - env:
+        - name: GF_SECURITY_ADMIN_USER
+          value: saifoun
+        - name: GF_SECURITY_ADMIN_PASSWORD
+          value: saifoun123
+        - name: GF_INSTALL_PLUGINS
+          value: grafana-piechart-panel,camptocamp-prometheus-alertmanager-datasource,grafana-clock-panel
+        image: grafana/grafana:10.0.4
+        imagePullPolicy: IfNotPresent
+        name: grafana
+        ports:
+        - containerPort: 3000
+          name: grafana
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /etc/grafana/provisioning/datasources
+          name: datasource
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: grafana-datasource
+        name: datasource
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2024-03-06T08:20:03Z"
+    lastUpdateTime: "2024-03-06T08:20:05Z"
+    message: ReplicaSet "grafana-69d56c44f9" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  - lastTransitionTime: "2024-06-12T03:58:01Z"
+    lastUpdateTime: "2024-06-12T03:58:01Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  observedGeneration: 1
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1
